@@ -90,7 +90,6 @@ function swipeLeft(){
 }
 
 function click(right,bottom) {
-	console.log(current, "slide"+String(current));
 	var currentSlide = document.getElementById("slide"+String(current));
 	var cards = currentSlide.getElementsByClassName('cards');
 	var index;
