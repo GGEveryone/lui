@@ -17,7 +17,8 @@ var clickable = false;
 // check movement every 200ms
 var hand;
 var velocity = 0;
-var pinched = false;
+var velocityPalm = 0;
+var pinch = 0;
 var opened = true;
 var first = true;
 setInterval(function() {
@@ -26,9 +27,9 @@ setInterval(function() {
 	} else {
 		checkMovementFull();
 	}
-	velocity = 0;
-	hand = 0;
-}, 200);
+	// velocity = 0;
+	// hand = 0;
+}, 100);
 
 var select;
 var touchesInit = {0: [], 1: [], 2: [], 3: [], 4: [] };
@@ -40,20 +41,28 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 
 	if (frame.hands.length >0) {
 		hand = frame.hands[0];
-		velocity = hand.palmVelocity;
+		velocityPalm = hand.palmVelocity;
 
-		pinched = pinched || hand.pinchStrength > 0.9; 
-		opened = hand.pinchStrength < 0.1;
-
+		// pinched = pinched || hand.pinchStrength > 0.9; 
+		// opened = hand.pinchStrength < 0.1;
+		// console.log(hand.pinchStrength);
 		if (!mainPage) {
-			if(hand.pinchStrength > 0.9){
-				if (findPinchingFinger(hand) == hand.index){
-					pinched = true;
-				}	
-			}
-			opened = hand.pinchStrength == 0;
-		}
 
+
+			if (pinch > 0.9 && hand.pinchStrength < 0.2) {
+				// console.log(pinch, hand.pinchStrength)
+				backToMain();
+			} else {
+				// console.log(0, hand.pinchStrength);
+				pinch = hand.pinchStrength;
+			}
+			// if(hand.pinchStrength > 0.9){
+			// 	if (findPinchingFinger(hand) == hand.index){
+			// 		pinched = true;
+			// 	}	
+			// }
+			// opened = hand.pinchStrength == 0;
+		}
 		// draw trace
 		Object.keys(touches).forEach(function(key){
 			var toTrace = touches[key];
@@ -62,27 +71,37 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 				clickable = true;
 			}
 			if (toTrace.length > 0){
-				trace(toTrace, fingers[key]);
+				// trace(toTrace, fingers[key]);
 			}
 		});
 
 		var xTot = 0;
 		var yTot = 0;
+		var xAvg;
+		var yAvg;
 		frame.pointables.forEach(function(pointable){
 			var color = fingers[pointable.type];
 			var position = pointable.stabilizedTipPosition;
 			var normalized = frame.interactionBox.normalizePoint(position);
 			var x = ctx.canvas.width * normalized[0];
 			var y = ctx.canvas.height * (1 - normalized[1]);
-			var radius = Math.abs(pointable.touchDistance) * 200;
+			var radius = Math.min(20 / Math.abs(pointable.touchDistance), 50);
+			// console.log(radius);
+			// var radius = 30;
 			var point = {center: [x,y], radius: radius};
 			touches[pointable.type].push(point);
-			drawCircle([x,y], radius, fingers[pointable.type], false);
+			// drawCircle([x,y], radius, fingers[pointable.type], false);
 			xTot += x;
 			yTot += y;
+			if (pointable.type == 1){
+				drawCircle([x,y], radius, fingers[pointable.type], true);
+				velocity = pointable.tipVelocity;
+				xAvg = x;
+				yAvg = y;
+			}
 		});
-		var xAvg = xTot / frame.fingers.length;
-		var yAvg = yTot / frame.fingers.length;
+		// var xAvg = xTot / frame.fingers.length;
+		// var yAvg = yTot / frame.fingers.length;
 		select = [xAvg > canvas.width/2, yAvg > canvas.height/2];
 	}		
 });
@@ -92,7 +111,7 @@ function drawCircle(center, radius, color, fill) {
 	ctx.beginPath();
 	ctx.arc(center[0], center[1], radius, 0, 2*Math.PI);
 	ctx.closePath();
-	ctx.lineWidth = 1;
+	ctx.lineWidth = 10;
 	if (fill) {
 	  ctx.fillStyle = color;
 	  ctx.fill();
@@ -122,14 +141,15 @@ function trace(toTrace, color){
 
 function checkMovementMain() {
 	// swipe left or right
-	if (Math.abs(velocity[0])>100) { // to make it less sensitive
-		if(velocity[0] < -300){
+	// console.log(velocityPalm[0]);
+	if (Math.abs(velocityPalm[0])>500) { // to make it less sensitive
+		if(velocityPalm[0] < -400){
 			swipeLeft();
-		} else if (velocity[0] > 300) {
+		} else if (velocityPalm[0] > 400) {
 			swipeRight();
 		}
 	} else { // click event
-		if(velocity[2] < -200 && select){
+		if(velocity[2] < -300 && select){
 			click(select[0], select[1]);
 			mainPage = false;
 		}
@@ -138,20 +158,17 @@ function checkMovementMain() {
 
 function checkMovementFull () {
 	// swipe left or right
-	if (Math.abs(velocity[0])>100) { // to make it less sensitive
-		if(velocity[0] < -200){
+	if (fullcard) {
+		if(velocityPalm[0] < -400){
 			menuRender(false);
-		} else if (velocity[0] > 200) {
+		} else if (velocityPalm[0] > 400) {
 			menuRender(true);
 		}
 	}
-
-	if (pinched && opened && !ignore){
-		backToMain();
-		pinched = false;
-		opened = true;
-		first = true;
-	}
+	// if (pinched == true && opened == true && !ignore == true){
+	// 	console.log("close", pinched, opened, ignore);
+	// 	backToMain();
+	// }
 }
 
 function findPinchingFinger(hand){

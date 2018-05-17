@@ -7,8 +7,10 @@ var slide2;
 var indc1;
 var indc2;
 var popup;
+var fullcard;
 var menu;
-var ignoreTimeout;
+// var ignore;
+// var ignoreDelay;
 
 window.onload = function() {
 	setInfobox();
@@ -115,6 +117,8 @@ function openUp(card, num) {
 	// reset
 	menuRender(false);
 	var content = document.getElementById("full"+num);
+	fullcard = content;
+	console.log(fullcard);
 	contentClear(popup);
 	
 	content.classList.remove('content-hidden');
@@ -124,10 +128,16 @@ function openUp(card, num) {
 	indc1.style.display = "none";
 	indc2.style.display = "none";
 
-	ignore = true;
-	ignoreTimeout = setTimeout(function() {
-		ignore = false;
-	}, 5000);
+	// reset pinching
+	// ignore = false;
+	// pinched = false;
+	// opened = true;
+	// console.log("disabled");
+	// setTimeout(function() {
+	// 	console.log("now");
+	// 	ignore = false;
+	// 	// console.log("now");
+	// }, 5000);
 }
 
 function contentClear(popup){
@@ -147,12 +157,36 @@ function contentClear(popup){
 function menuRender(show) {
 	var heading = document.getElementsByTagName("header")[0];
 	if (show) {
+		while (heading.classList.contains('slide1-out')){
+			heading.classList.remove('slide1-out')
+		}
+		// while (fullcard.classList.contains('slide1-out')){
+		// 	fullcard.classList.remove('slide1-out')
+		// }
+		heading.classList.add('slide1-in');
+		// fullcard.classList.add('slide1-in');
 		heading.style.display = 'flex';
 		menu.style.display = "none";
+		// ignore = true;
 		// console.log('open');
 	} else {
+		while (heading.classList.contains('slide1-in')){
+			heading.classList.remove('slide1-in')
+		}
+		// while (fullcard.classList.contains('slide1-in')){
+		// 	fullcard.classList.remove('slide1-in')
+		// }
+		heading.classList.add('slide1-out');
+		// fullcard.classList.add('slide1-out');
 		heading.style.display = '';
 		menu.style.display = "";
+		// clearTimeout(ignoreDelay);
+		// ignore = true;
+		// pinched = false;
+		// opened = true;
+		// ignoreDelay = setTimeout(function() {
+		// 	ignore = false;
+		// }, 1000);
 	}
 }
 
@@ -161,6 +195,9 @@ function backToMain() {
 	indc1.style.display = "";
 	indc2.style.display = "";
 	mainPage = true;
-	clearTimeout(ignoreTimeout);
+	// ignore = true;
+	// pinched = false;
+	// opened = true;
+	// clearTimeout(ignoreDelay);
 }
 
