@@ -49,7 +49,7 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 		if (!mainPage) {
 
 
-			if (pinch > 0.9 && hand.pinchStrength < 0.2) {
+			if (pinch > 0.8 && hand.pinchStrength < 0.3) {
 				// console.log(pinch, hand.pinchStrength)
 				backToMain();
 			} else {

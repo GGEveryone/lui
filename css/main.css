@@ -255,3 +255,12 @@ header {
 	0% {transform: translateX(0%);}
     100% { transform: translateX(100%); }
 }
+
+@keyframes full-scale{
+    from{
+        transform:scale(0);
+    }
+    to{
+        transform:scale(2);
+    }
+}

@@ -121,6 +121,7 @@ function openUp(card, num) {
 	console.log(fullcard);
 	contentClear(popup);
 	
+	// card.style.animation = "full-scale 1s";
 	content.classList.remove('content-hidden');
 	content.classList.add('content-full');
 	popup.style.display = "flex";
