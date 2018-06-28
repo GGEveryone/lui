@@ -9,6 +9,7 @@ canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 var ctx = canvas.getContext("2d");
 ctx.globalAlpha = 0.2;
+
 var tempPositions = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
 var last;
 var fingers = ["#9bcfed", "#B2EBF2", "#80DEEA", "#4DD0E1", "#26C6DA"];
@@ -35,33 +36,19 @@ var select;
 var touchesInit = {0: [], 1: [], 2: [], 3: [], 4: [] };
 var touches = {0: [], 1: [], 2: [], 3: [], 4: [] };
 
-
+// Leap Motion loop handler
 Leap.loop({frameEventName: "animationFrame"}, function(frame) {	
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 	if (frame.hands.length >0) {
 		hand = frame.hands[0];
 		velocityPalm = hand.palmVelocity;
-
-		// pinched = pinched || hand.pinchStrength > 0.9; 
-		// opened = hand.pinchStrength < 0.1;
-		// console.log(hand.pinchStrength);
+		// check hand pinch
 		if (!mainPage) {
-
-
 			if (pinch > 0.8 && hand.pinchStrength < 0.3) {
-				// console.log(pinch, hand.pinchStrength)
 				backToMain();
 			} else {
-				// console.log(0, hand.pinchStrength);
 				pinch = hand.pinchStrength;
 			}
-			// if(hand.pinchStrength > 0.9){
-			// 	if (findPinchingFinger(hand) == hand.index){
-			// 		pinched = true;
-			// 	}	
-			// }
-			// opened = hand.pinchStrength == 0;
 		}
 		// draw trace
 		Object.keys(touches).forEach(function(key){
@@ -71,7 +58,7 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 				clickable = true;
 			}
 			if (toTrace.length > 0){
-				// trace(toTrace, fingers[key]);
+			// trace(toTrace, fingers[key]);
 			}
 		});
 
@@ -86,11 +73,9 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 			var x = ctx.canvas.width * normalized[0];
 			var y = ctx.canvas.height * (1 - normalized[1]);
 			var radius = Math.min(20 / Math.abs(pointable.touchDistance), 50);
-			// console.log(radius);
-			// var radius = 30;
 			var point = {center: [x,y], radius: radius};
 			touches[pointable.type].push(point);
-			// drawCircle([x,y], radius, fingers[pointable.type], false);
+			drawCircle([x,y], radius, fingers[pointable.type], false);
 			xTot += x;
 			yTot += y;
 			if (pointable.type == 1){
@@ -107,7 +92,8 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 });
 
 function drawCircle(center, radius, color, fill) {
-  // Make an closed arc with a complete rotation
+  	// Make an closed arc with a complete rotation
+  	//console.log(center);
 	ctx.beginPath();
 	ctx.arc(center[0], center[1], radius, 0, 2*Math.PI);
 	ctx.closePath();
@@ -165,10 +151,6 @@ function checkMovementFull () {
 			menuRender(true);
 		}
 	}
-	// if (pinched == true && opened == true && !ignore == true){
-	// 	console.log("close", pinched, opened, ignore);
-	// 	backToMain();
-	// }
 }
 
 function findPinchingFinger(hand){
