@@ -36,14 +36,14 @@ var touchesInit = {0: [], 1: [], 2: [], 3: [], 4: [] };
 var touches = {0: [], 1: [], 2: [], 3: [], 4: [] };
 
 
-Leap.loop({frameEventName: "animationFrame"}, function(frame) {	
+Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	if (frame.hands.length >0) {
 		hand = frame.hands[0];
 		velocityPalm = hand.palmVelocity;
 
-		// pinched = pinched || hand.pinchStrength > 0.9; 
+		// pinched = pinched || hand.pinchStrength > 0.9;
 		// opened = hand.pinchStrength < 0.1;
 		// console.log(hand.pinchStrength);
 		if (!mainPage) {
@@ -59,7 +59,7 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 			// if(hand.pinchStrength > 0.9){
 			// 	if (findPinchingFinger(hand) == hand.index){
 			// 		pinched = true;
-			// 	}	
+			// 	}
 			// }
 			// opened = hand.pinchStrength == 0;
 		}
@@ -90,7 +90,7 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 			// var radius = 30;
 			var point = {center: [x,y], radius: radius};
 			touches[pointable.type].push(point);
-			// drawCircle([x,y], radius, fingers[pointable.type], false);
+			drawCircle([x,y], radius, fingers[pointable.type], false);
 			xTot += x;
 			yTot += y;
 			if (pointable.type == 1){
@@ -103,7 +103,7 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 		// var xAvg = xTot / frame.fingers.length;
 		// var yAvg = yTot / frame.fingers.length;
 		select = [xAvg > canvas.width/2, yAvg > canvas.height/2];
-	}		
+	}
 });
 
 function drawCircle(center, radius, color, fill) {
@@ -179,11 +179,12 @@ function findPinchingFinger(hand){
 		distance = Leap.vec3.distance(hand.thumb.tipPosition, finger.tipPosition);
 		if(current != hand.thumb && distance < closest) {
 			closest = distance;
-			pincher = current; 
+			pincher = current;
 		}
-	} 
+	}
 	return pincher;
-} 
+}
+
 
 function leapToScene(position) {
   var x = position[0];
@@ -191,5 +192,5 @@ function leapToScene(position) {
   var x = canvas.width/2 + position[0];
   var y =  canvas.height - position[1];
   last  = [x,y];
-  return [x,y]
+  return [x,y];
 }

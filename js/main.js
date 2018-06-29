@@ -26,7 +26,7 @@ window.onload = function() {
 	// popup related
 	popup = document.getElementById("popup");
 	menu = document.getElementById("menu");
-}	
+}
 
 function setInfobox(){
 	// set variables
@@ -53,8 +53,8 @@ function setInfobox(){
 	weather.src = "image/sunny.png";
 }
 
-function swipeRight(){	
-	// console.log("swipe left to right");
+function swipeRight(){
+	console.log("swipe left to right");
 	if (slide1.classList.contains("slide1-out")){
 		slide1.classList.remove("slide1-out");
 	}
@@ -73,7 +73,7 @@ function swipeRight(){
 }
 
 function swipeLeft(){
-	// console.log("swipe right to left")
+	console.log("swipe right to left")
 	if (slide1.classList.contains("slide1-in")){
 		slide1.classList.remove("slide1-in");
 	}
@@ -120,7 +120,7 @@ function openUp(card, num) {
 	fullcard = content;
 	console.log(fullcard);
 	contentClear(popup);
-	
+
 	// card.style.animation = "full-scale 1s";
 	content.classList.remove('content-hidden');
 	content.classList.add('content-full');
@@ -202,3 +202,48 @@ function backToMain() {
 	// clearTimeout(ignoreDelay);
 }
 
+// Additional Javascript for Animation
+;(function () {
+
+	var contentWayPoint = function() {
+		var i = 0;
+		$('.animate-box').waypoint( function( direction ) {
+
+			if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
+
+				i++;
+
+				$(this.element).addClass('item-animate');
+				setTimeout(function(){
+
+					$('body .animate-box.item-animate').each(function(k){
+						var el = $(this);
+						setTimeout( function () {
+							var effect = el.data('animate-effect');
+							if ( effect === 'fadeIn') {
+								el.addClass('fadeIn animated-fast');
+							} else if ( effect === 'fadeInLeft') {
+								el.addClass('fadeInLeft animated-fast');
+							} else if ( effect === 'fadeInRight') {
+								el.addClass('fadeInRight animated-fast');
+							} else {
+								el.addClass('fadeInUp animated-fast');
+							}
+
+							el.removeClass('item-animate');
+						},  k * 200, 'easeInOutExpo' );
+					});
+
+				}, 100);
+
+			}
+
+		} , { offset: '85%' } );
+	};
+
+	$(function(){
+		contentWayPoint();
+	});
+
+
+}());
