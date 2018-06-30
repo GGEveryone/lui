@@ -116,6 +116,7 @@ function hoverOn(card) {
 	var selected_card = document.getElementById(card);
 	selected_card.classList.remove('animate-box','fadeInUp','animated-fast');
 	selected_card.classList.add('animated','jello');
+	console.log("jello has been added");
 }
 
 function hoverOff(card) {

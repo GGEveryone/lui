@@ -14,6 +14,8 @@ var last;
 var fingers = ["#9bcfed", "#B2EBF2", "#80DEEA", "#4DD0E1", "#26C6DA"];
 var clickable = false;
 
+// console.log(canvas.width,canvas.height);
+
 // check movement every 200ms
 var hand;
 var velocity = 0;
@@ -41,7 +43,11 @@ var touches = {0: [], 1: [], 2: [], 3: [], 4: [] };
 var card_dimensions = [];
 for (var i = 1; i <= 12; i++) {
 	card_dimensions[i] = document.getElementById("card"+i).getBoundingClientRect();
+	// console.log("Dimension of card "+i);
+	// console.log(card_dimensions[i]);
 }
+
+var currentSlide = 1;
 
 Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -154,8 +160,10 @@ function checkMovementMain() {
 	if (Math.abs(velocityPalm[0])>500) { // to make it less sensitive
 		if(velocityPalm[0] < -400){
 			swipeLeft();
+			currentSlide = 2;
 		} else if (velocityPalm[0] > 400) {
 			swipeRight();
+			currentSlide = 1;
 		}
 	} else { // click event
 		if(velocity[2] < -300 && select){
@@ -163,19 +171,36 @@ function checkMovementMain() {
 			mainPage = false;
 		}
 	}
-	for (var i = 1; i <= 6; i++) {
-		var card_rect = card_dimensions[i];
-		if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
-			index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
-			// console.log("The finger is on card " + i);
-			// console.log(index_position)
-			hoverOn("card"+i);
-		} else {
-			hoverOff("card"+i);
-			// console.log("The finger moves off card " + i);
+	if (currentSlide == 1) {
+		for (var i = 1; i <= 6; i++) {
+			var card_rect = card_dimensions[i];
+			//if the finger falls in the
+			if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
+				index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
+				// console.log("The finger is on card " + i);
+				// console.log(index_position)
+				hoverOn("card"+i);
+			} else {
+				hoverOff("card"+i);
+				// console.log("The finger moves off card " + i);
+			}
 		}
-
+	} else if (currentSlide == 2) {
+		for (var i = 7; i <= 12; i++) {
+			var card_rect = card_dimensions[i];
+			//if the finger falls in the
+			if (index_position[0] > card_rect.left - canvas.width && index_position[0] < card_rect.right -canvas.width &&
+				index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
+				// console.log("The finger is on card " + i);
+				// console.log(index_position)
+				hoverOn("card"+i);
+			} else {
+				hoverOff("card"+i);
+				// console.log("The finger moves off card " + i);
+			}
+		}
 	}
+
 }
 
 function checkMovementFull () {
