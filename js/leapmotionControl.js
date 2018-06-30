@@ -17,10 +17,12 @@ var clickable = false;
 // check movement every 200ms
 var hand;
 var velocity = 0;
+var index_position = 0;
 var velocityPalm = 0;
 var pinch = 0;
 var opened = true;
 var first = true;
+
 setInterval(function() {
 	if (mainPage) {
 		checkMovementMain();
@@ -35,6 +37,11 @@ var select;
 var touchesInit = {0: [], 1: [], 2: [], 3: [], 4: [] };
 var touches = {0: [], 1: [], 2: [], 3: [], 4: [] };
 
+//get dimension information of all the cards
+var card_dimensions = [];
+for (var i = 1; i <= 12; i++) {
+	card_dimensions[i] = document.getElementById("card"+i).getBoundingClientRect();
+}
 
 Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -96,6 +103,7 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 			if (pointable.type == 1){
 				drawCircle([x,y], radius, fingers[pointable.type], true);
 				velocity = pointable.tipVelocity;
+				index_position = [x, y];
 				xAvg = x;
 				yAvg = y;
 			}
@@ -142,6 +150,7 @@ function trace(toTrace, color){
 function checkMovementMain() {
 	// swipe left or right
 	// console.log(velocityPalm[0]);
+	// console.log(index_position)
 	if (Math.abs(velocityPalm[0])>500) { // to make it less sensitive
 		if(velocityPalm[0] < -400){
 			swipeLeft();
@@ -153,6 +162,19 @@ function checkMovementMain() {
 			click(select[0], select[1]);
 			mainPage = false;
 		}
+	}
+	for (var i = 1; i <= 6; i++) {
+		var card_rect = card_dimensions[i];
+		if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
+			index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
+			// console.log("The finger is on card " + i);
+			// console.log(index_position)
+			hoverOn("card"+i);
+		} else {
+			hoverOff("card"+i);
+			// console.log("The finger moves off card " + i);
+		}
+
 	}
 }
 

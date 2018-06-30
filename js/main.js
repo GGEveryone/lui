@@ -112,6 +112,19 @@ function click(right,bottom) {
 	openUp(card, card.id.charAt(4));
 }
 
+function hoverOn(card) {
+	var selected_card = document.getElementById(card);
+	selected_card.classList.remove('animate-box','fadeInUp','animated-fast');
+	selected_card.classList.add('animated','jello');
+}
+
+function hoverOff(card) {
+	var unselected_card = document.getElementById(card);
+	if (unselected_card.classList.contains('jello')) {
+		unselected_card.classList.remove('animated','jello');
+		// unselected_card.classList.add('animate-box','fadeInUp','animated-fast');
+	}
+}
 
 function openUp(card, num) {
 	// reset
@@ -240,6 +253,7 @@ function backToMain() {
 
 		} , { offset: '85%' } );
 	};
+
 
 	$(function(){
 		contentWayPoint();
