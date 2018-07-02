@@ -109,6 +109,11 @@ main {
     /*z-index: 5;*/
 }
 
+.card-expand {
+	-webkit-transform: scale(2);
+	-webkit-transition-duration: 2s;
+}
+
 #card1 {
 	background-image: url(../image/1.png);
 }
@@ -209,8 +214,13 @@ header {
 	align-items: center;
 }
 
+.zoomIn {
+	-webkit-animation-duration: 0.5s;
+}
+
 .content-hidden {
 	display: none;
+	transition-duration: 0.8s;
 }
 
 .expand {

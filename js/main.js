@@ -136,10 +136,12 @@ function openUp(num) {
 	fullcard = content;
 	console.log(fullcard);
 	contentClear(popup);
-
 	// card.style.animation = "full-scale 1s";
+	content.classList.add('card-expand');
+	setTimeout(function(){},5000);
 	content.classList.remove('content-hidden');
-	content.classList.add('content-full');
+	content.classList.add('content-full','animated','zoomIn');
+	console.log("content full has been added");
 	popup.style.display = "flex";
 
 	indc1.style.display = "none";

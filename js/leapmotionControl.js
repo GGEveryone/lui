@@ -35,7 +35,8 @@ setInterval(function() {
 	// hand = 0;
 }, 100);
 
-var select;
+//var select;
+var iconSelected = false;
 var touchesInit = {0: [], 1: [], 2: [], 3: [], 4: [] };
 var touches = {0: [], 1: [], 2: [], 3: [], 4: [] };
 
@@ -116,7 +117,7 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 		});
 		// var xAvg = xTot / frame.fingers.length;
 		// var yAvg = yTot / frame.fingers.length;
-		select = [xAvg > canvas.width/2, yAvg > canvas.height/2];
+		//select = [xAvg > canvas.width/2, yAvg > canvas.height/2];
 	}
 });
 
@@ -171,11 +172,10 @@ function checkMovementMain() {
 			if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
 				index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
 				hoverOn("card"+i);
-				console.log(velocity)
-				if (velocity[1] < -300) {
-					openUp(i)
-					mainPage = false;
-				}
+				// if (velocity[1] < -300) {
+				// 	openUp(i)
+				// 	mainPage = false;
+				// }
 			} else {
 				hoverOff("card"+i);
 			}
@@ -189,12 +189,14 @@ function checkMovementMain() {
 				// console.log("The finger is on card " + i);
 				// console.log(index_position)
 				hoverOn("card"+i);
-				if (velocity[1] < -300) {
-					openUp(i)
-					mainPage = false;
-				}
+				iconSelected = true;
+				// if (velocity[1] < -300) {
+				// 	openUp(i)
+				// 	mainPage = false;
+				// }
 			} else {
 				hoverOff("card"+i);
+				iconSelected = false;
 				// console.log("The finger moves off card " + i);
 			}
 		}
