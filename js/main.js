@@ -91,27 +91,28 @@ function swipeLeft(){
 	}
 }
 
-function click(right,bottom) {
-	var currentSlide = document.getElementById("slide"+String(current));
-	var cards = currentSlide.getElementsByClassName('cards');
-	var index;
-	if (right) {
-		if (bottom) {
-			index = 3;
-		} else {
-			index = 1;
-		}
-	} else {
-		if (bottom) {
-			index = 2;
-		} else {
-			index = 0;
-		}
-	}
-	card = cards[index];
-	openUp(card, card.id.charAt(4));
-}
+// function click(right,bottom) {
+// 	var currentSlide = document.getElementById("slide"+String(current));
+// 	var cards = currentSlide.getElementsByClassName('cards');
+// 	var index;
+// 	if (right) {
+// 		if (bottom) {
+// 			index = 3;
+// 		} else {
+// 			index = 1;
+// 		}
+// 	} else {
+// 		if (bottom) {
+// 			index = 2;
+// 		} else {
+// 			index = 0;
+// 		}
+// 	}
+// 	card = cards[index];
+// 	openUp(card, card.id.charAt(4));
+// }
 
+//Add the animation when index finger hovers on the icon
 function hoverOn(card) {
 	var selected_card = document.getElementById(card);
 	selected_card.classList.remove('animate-box','fadeInUp','animated-fast');
@@ -119,6 +120,7 @@ function hoverOn(card) {
 	console.log("jello has been added");
 }
 
+//deactivate the hover on animation
 function hoverOff(card) {
 	var unselected_card = document.getElementById(card);
 	if (unselected_card.classList.contains('jello')) {
@@ -127,7 +129,7 @@ function hoverOff(card) {
 	}
 }
 
-function openUp(card, num) {
+function openUp(num) {
 	// reset
 	menuRender(false);
 	var content = document.getElementById("full"+num);

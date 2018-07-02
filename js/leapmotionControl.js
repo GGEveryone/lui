@@ -155,8 +155,6 @@ function trace(toTrace, color){
 
 function checkMovementMain() {
 	// swipe left or right
-	// console.log(velocityPalm[0]);
-	// console.log(index_position)
 	if (Math.abs(velocityPalm[0])>500) { // to make it less sensitive
 		if(velocityPalm[0] < -400){
 			swipeLeft();
@@ -165,35 +163,36 @@ function checkMovementMain() {
 			swipeRight();
 			currentSlide = 1;
 		}
-	} else { // click event
-		if(velocity[2] < -300 && select){
-			click(select[0], select[1]);
-			mainPage = false;
-		}
 	}
 	if (currentSlide == 1) {
 		for (var i = 1; i <= 6; i++) {
 			var card_rect = card_dimensions[i];
-			//if the finger falls in the
+			//if the finger falls in the card div dimension for card 1-6
 			if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
 				index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
-				// console.log("The finger is on card " + i);
-				// console.log(index_position)
 				hoverOn("card"+i);
+				console.log(velocity)
+				if (velocity[1] < -300) {
+					openUp(i)
+					mainPage = false;
+				}
 			} else {
 				hoverOff("card"+i);
-				// console.log("The finger moves off card " + i);
 			}
 		}
 	} else if (currentSlide == 2) {
 		for (var i = 7; i <= 12; i++) {
 			var card_rect = card_dimensions[i];
-			//if the finger falls in the
+			//if the finger falls in the card div dimension for card 7-12
 			if (index_position[0] > card_rect.left - canvas.width && index_position[0] < card_rect.right -canvas.width &&
 				index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
 				// console.log("The finger is on card " + i);
 				// console.log(index_position)
 				hoverOn("card"+i);
+				if (velocity[1] < -300) {
+					openUp(i)
+					mainPage = false;
+				}
 			} else {
 				hoverOff("card"+i);
 				// console.log("The finger moves off card " + i);
