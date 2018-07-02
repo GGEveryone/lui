@@ -26,7 +26,7 @@ window.onload = function() {
 	// popup related
 	popup = document.getElementById("popup");
 	menu = document.getElementById("menu");
-}	
+}
 
 // Initialize the Date, Time, Info Box (top right corner of UI)
 function setInfobox(){
@@ -92,41 +92,56 @@ function swipeLeft(){
 	}
 }
 
-function click(right,bottom) {
-	console.log("click");
-	var currentSlide = document.getElementById("slide"+String(current));
-	var cards = currentSlide.getElementsByClassName('cards');
-	var index;
-	if (right) {
-		if (bottom) {
-			index = 3;
-		} else {
-			index = 1;
-		}
-	} else {
-		if (bottom) {
-			index = 2;
-		} else {
-			index = 0;
-		}
-	}
-	card = cards[index];
-	openUp(card, card.id.charAt(4));
+// function click(right,bottom) {
+// 	var currentSlide = document.getElementById("slide"+String(current));
+// 	var cards = currentSlide.getElementsByClassName('cards');
+// 	var index;
+// 	if (right) {
+// 		if (bottom) {
+// 			index = 3;
+// 		} else {
+// 			index = 1;
+// 		}
+// 	} else {
+// 		if (bottom) {
+// 			index = 2;
+// 		} else {
+// 			index = 0;
+// 		}
+// 	}
+// 	card = cards[index];
+// 	openUp(card, card.id.charAt(4));
+// }
+
+//Add the animation when index finger hovers on the icon
+function hoverOn(card) {
+	var selected_card = document.getElementById(card);
+	selected_card.classList.remove('animate-box','fadeInUp','animated-fast');
+	selected_card.classList.add('animated','jello');
+	console.log("jello has been added");
 }
 
+//deactivate the hover on animation
+function hoverOff(card) {
+	var unselected_card = document.getElementById(card);
+	if (unselected_card.classList.contains('jello')) {
+		unselected_card.classList.remove('animated','jello');
+		// unselected_card.classList.add('animate-box','fadeInUp','animated-fast');
+	}
+}
 
-function openUp(card, num) {
-	console.log("openup");
-	
+function openUp(num) {
 	// reset
 	menuRender(false);
 	var content = document.getElementById("full"+num);
 	fullcard = content;
 	contentClear(popup);
-	
 	// card.style.animation = "full-scale 1s";
+	content.classList.add('card-expand');
+	setTimeout(function(){},5000);
 	content.classList.remove('content-hidden');
-	content.classList.add('content-full');
+	content.classList.add('content-full','animated','zoomIn');
+	console.log("content full has been added");
 	popup.style.display = "flex";
 
 	indc1.style.display = "none";
@@ -187,3 +202,49 @@ function backToMain() {
 	// clearTimeout(ignoreDelay);
 }
 
+// Additional Javascript for Animation
+;(function () {
+
+	var contentWayPoint = function() {
+		var i = 0;
+		$('.animate-box').waypoint( function( direction ) {
+
+			if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
+
+				i++;
+
+				$(this.element).addClass('item-animate');
+				setTimeout(function(){
+
+					$('body .animate-box.item-animate').each(function(k){
+						var el = $(this);
+						setTimeout( function () {
+							var effect = el.data('animate-effect');
+							if ( effect === 'fadeIn') {
+								el.addClass('fadeIn animated-fast');
+							} else if ( effect === 'fadeInLeft') {
+								el.addClass('fadeInLeft animated-fast');
+							} else if ( effect === 'fadeInRight') {
+								el.addClass('fadeInRight animated-fast');
+							} else {
+								el.addClass('fadeInUp animated-fast');
+							}
+
+							el.removeClass('item-animate');
+						},  k * 200, 'easeInOutExpo' );
+					});
+
+				}, 100);
+
+			}
+
+		} , { offset: '85%' } );
+	};
+
+
+	$(function(){
+		contentWayPoint();
+	});
+
+
+}());
