@@ -2,6 +2,7 @@
 var week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var current = 1;
 var mainPage = true;
+
 var slide1;
 var slide2;
 var indc1;
@@ -9,9 +10,8 @@ var indc2;
 var popup;
 var fullcard;
 var menu;
-// var ignore;
-// var ignoreDelay;
 
+// Initialize UI Elements (sliders, etc)
 window.onload = function() {
 	setInfobox();
 
@@ -28,6 +28,7 @@ window.onload = function() {
 	menu = document.getElementById("menu");
 }
 
+// Initialize the Date, Time, Info Box (top right corner of UI)
 function setInfobox(){
 	// set variables
 	var day = document.getElementById("day");
@@ -53,7 +54,7 @@ function setInfobox(){
 	weather.src = "image/sunny.png";
 }
 
-function swipeRight(){
+function swipeRight(){	
 	console.log("swipe left to right");
 	if (slide1.classList.contains("slide1-out")){
 		slide1.classList.remove("slide1-out");
@@ -73,7 +74,7 @@ function swipeRight(){
 }
 
 function swipeLeft(){
-	console.log("swipe right to left")
+	console.log("swipe right to left");
 	if (slide1.classList.contains("slide1-in")){
 		slide1.classList.remove("slide1-in");
 	}
@@ -134,7 +135,6 @@ function openUp(num) {
 	menuRender(false);
 	var content = document.getElementById("full"+num);
 	fullcard = content;
-	console.log(fullcard);
 	contentClear(popup);
 	// card.style.animation = "full-scale 1s";
 	content.classList.add('card-expand');
@@ -146,17 +146,6 @@ function openUp(num) {
 
 	indc1.style.display = "none";
 	indc2.style.display = "none";
-
-	// reset pinching
-	// ignore = false;
-	// pinched = false;
-	// opened = true;
-	// console.log("disabled");
-	// setTimeout(function() {
-	// 	console.log("now");
-	// 	ignore = false;
-	// 	// console.log("now");
-	// }, 5000);
 }
 
 function contentClear(popup){
@@ -199,13 +188,6 @@ function menuRender(show) {
 		// fullcard.classList.add('slide1-out');
 		heading.style.display = '';
 		menu.style.display = "";
-		// clearTimeout(ignoreDelay);
-		// ignore = true;
-		// pinched = false;
-		// opened = true;
-		// ignoreDelay = setTimeout(function() {
-		// 	ignore = false;
-		// }, 1000);
 	}
 }
 
