@@ -12,20 +12,31 @@
 
 		<!-- Bootstrap core CSS -->
 		<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
 		<!-- Custom styles -->
 		<link href="css/main.css" rel="stylesheet">
-        <!-- Animate.css -->
-    	<link rel="stylesheet" href="css/animate.css">
-    	<!-- Icomoon Icon Fonts-->
-    	<link rel="stylesheet" href="css/icomoon.css">
-    	<!-- Bootstrap  -->
-    	<link rel="stylesheet" href="css/bootstrap.css">
+		<!-- Animate.css -->
+		<link rel="stylesheet" href="css/animate.css">
+		<!-- Icomoon Icon Fonts-->
+		<link rel="stylesheet" href="css/icomoon.css">
+		<!-- Bootstrap  -->
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<!-- Modernizr JS -->
+		<script src="js/style/modernizr-2.6.2.min.js"></script>
+		
+		<!-- Photos Core CSS file -->
+		<!-- <link rel="stylesheet" href="css/photos/photoswipe.css">  -->
 
-        <!-- Modernizr JS -->
-    	<script src="js/modernizr-2.6.2.min.js"></script>
+		<!-- Skin CSS file (styling of UI - buttons, caption, etc.)
+		 In the folder of skin CSS file there are also:
+		 - .png and .svg icons sprite, 
+		 - preloader.gif (for browsers that do not support CSS animations) -->
+<!-- 		<link rel="stylesheet" href="css/photos/default-skin/default-skin.css"> 
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+		<script type='text/javascript' src='unitegallery/js/unitegallery.min.js'></script> 
+		<link rel='stylesheet' href='unitegallery/css/unite-gallery.css' type='text/css' /> 
+		<script type='text/javascript' src='unitegallery/themes/default/ug-theme-default.js'></script> 
+		<link rel='stylesheet' href='unitegallery/themes/default/ug-theme-default.css' type='text/css' /> -->
 
-		<!-- <script src="js/main.js"></script> -->
 	</head>
 
 	<body>
@@ -48,7 +59,7 @@
 						<div id="card2" class="cards animate-box"></div>
 						<div id="card3" class="cards animate-box"></div>
 						<div id="card4" class="cards animate-box"></div>
-                        <div id="card5" class="cards animate-box"></div>
+						<div id="card5" class="cards animate-box"></div>
 						<div id="card6" class="cards animate-box"></div>
 					</div>
 				</div>
@@ -58,9 +69,9 @@
 					<div class="cards-container">
 						<div id="card7" class="cards animate-box"></div>
 						<div id="card8" class="cards animate-box"></div>
-                        <div id="card9" class="cards animate-box"></div>
+						<div id="card9" class="cards animate-box"></div>
 						<div id="card10" class="cards animate-box"></div>
-                        <div id="card11" class="cards animate-box"></div>
+						<div id="card11" class="cards animate-box"></div>
 						<div id="card12" class="cards animate-box"></div>
 					</div>
 				</div>
@@ -75,26 +86,59 @@
 
 		<div id = "popup" class = "full-screen">
 			<!-- Menu on the left -->
-			<img id = "menu" src = "image/menu.png">
-			<header>
-				<!-- <img id = "menu" src = "image/menu.png"> -->
-			</header>
+			<!-- <img id = "menu" src = "image/menu.png"> -->
+			<!-- <header></header> -->
+			<!-- Photos -->
 			<div id="full1" class="content-hidden">
-				<a href="facetime:14239413027">Connect using FaceTime</a>
-			</div>
-			<div id="full2" class="content-hidden">
-				<!-- <iframe class = "expand" src="https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FNew_York" style="border: 0"frameborder="0" scrolling="no"></iframe> -->
-			</div>
-			<div id="full3" class="content-hidden"></div>
-			<div id="full4" class="content-hidden"></div>
-			<div id="full5" class="content-hidden">
-				<!-- <iframe class = "expand" src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d11792.208311160495!2d-71.09137475!3d42.362729400000006!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1525786984583" frameborder="0" style="border:0" allowfullscreen></iframe> -->
-			</div>
-			<div id="full6" class="content-hidden"></div>
-			<div id="full7" class="content-hidden"></div>
-			<div id="full8" class="content-hidden"></div>
-		</div>
+				<div id="gallery" style="display:none;">
+									<!-- <script type="text/javascript">
+				
+				jQuery(document).ready(function(){
+					
+					jQuery("#gallery").unitegallery();
+				});
+				
+				</script> -->
+		
+<!-- 					<img alt="Image 1 Title" src="thumbs/image1.jpg"
+						data-image="images/image1.jpg"
+						data-description="Image 1 Description">
+					
+					<img alt="Image 2 Title" src="thumbs/image2.jpg"
+						data-image="images/image02.jpg"
+						data-description="Image 2 Description"> -->
+		
+				</div>
 
+			</div>
+			<!-- Instagram -->
+			<div id="full2" class="content-hidden"></div>
+			<!-- Google -->
+			<div id="full3" class="content-hidden"></div>
+			<!-- CNN -->
+			<div id="full4" class="content-hidden"></div>
+			<!-- Google Maps -->
+			<div id="full5" class="content-hidden">
+				<div id="map-canvas"></div>
+<!-- 				<iframe class = "expand" src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d11792.208311160495!2d-71.09137475!3d42.362729400000006!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1525786984583" frameborder="0" style="border:0" allowfullscreen></iframe> -->
+			</div>
+			<!-- YouTube -->
+			<div id="full6" class="content-hidden"></div>
+			<!-- Netflix -->
+			<div id="full7" class="content-hidden"></div>
+			<!-- Spotify -->
+			<div id="full8" class="content-hidden"></div>
+			<!-- Google Calendar -->
+			<div id="full9" class="content-hidden">
+				<iframe class = "expand" src="https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FNew_York" style="border: 0"frameborder="0" scrolling="no"></iframe>
+			</div>
+			<!-- Phone -->
+			<div id="full10" class="content-hidden"></div>
+			<!-- Game -->
+			<div id="full11" class="content-hidden"></div>
+			<!-- Gmail -->
+			<div id="full12" class="content-hidden"></div>
+		</div>
 
 		<!-- LeapMotion script -->
 		<script type = "text/javascript" src = "http://js.leapmotion.com/leap-0.6.3.min.js"></script>
@@ -104,14 +148,36 @@
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- jQuery Easing -->
-    	<script src="js/jquery.easing.1.3.js"></script>
-    	<!-- Bootstrap -->
-    	<script src="js/bootstrap.min.js"></script>
-    	<!-- Waypoints -->
-    	<script src="js/jquery.waypoints.min.js"></script>
-        <!-- Main Javascript -->
-        <script src="js/main.js"></script>
+		<!-- jQuery Easing -->
+		<script src="js/style/jquery.easing.1.3.js"></script>
+		<!-- Bootstrap -->
+		<script src="js/style/bootstrap.min.js"></script>
+		<!-- Waypoints -->
+		<script src="js/style/jquery.waypoints.min.js"></script>
+		
+		<!-- Main Javascript -->
+		<script src="js/main.js"></script>
+		<!-- Maps -->
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+		<!-- <script src="./js/underscore.min.js"></script> -->
+		<!-- <script src="./js/leap.min.js"></script> -->
+		<!-- <script src="./js/main.js"></script> -->
+		<!-- <script src="./js/leap-engine.js"></script> -->
+
+		<!-- <script src="js/maps.js"></script> -->
+
+		<!-- Photos -->
+		<!-- Core JS file -->
+		<script src="js/photos/photoswipe.min.js"></script> 
+
+		<!-- UI JS file -->
+		<script src="js/photos/photoswipe-ui-default.min.js"></script> 
+				<link rel="stylesheet" href="css/photos/default-skin/default-skin.css"> 
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+		<script type='text/javascript' src='unitegallery/js/unitegallery.min.js'></script> 
+		<link rel='stylesheet' href='unitegallery/css/unite-gallery.css' type='text/css' /> 
+		<script type='text/javascript' src='unitegallery/themes/default/ug-theme-default.js'></script> 
+		<link rel='stylesheet' href='unitegallery/themes/default/ug-theme-default.css' type='text/css' />
 	</body>
 
 </html>

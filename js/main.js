@@ -8,9 +8,8 @@ var indc1;
 var indc2;
 var popup;
 var fullcard;
-var menu;
-// var ignore;
-// var ignoreDelay;
+// var menu;
+var photos;
 
 window.onload = function() {
 	setInfobox();
@@ -25,25 +24,30 @@ window.onload = function() {
 
 	// popup related
 	popup = document.getElementById("popup");
-	menu = document.getElementById("menu");
+	// menu = document.getElementById("menu");
+
+	// jQuery("#gallery").unitegallery({});
+	// photos = document.getElementById("gallery").unitegalleryMain();
+	// $(document).ready(function(){ 
+		// photos = $("#gallery").unitegalleryMain(); 
+	// }); 
 }
 
 function setInfobox(){
-	// set variables
-	var day = document.getElementById("day");
-	var time = document.getElementById("time");
-	var weather = document.getElementById("weather");
-	var date = new Date;
+	let day = document.getElementById("day");
+	let time = document.getElementById("time");
+	let weather = document.getElementById("weather");
+	let date = new Date;
 	day.innerHTML = week[date.getDay()];
-	var hour = date.getHours();
-	var end;
+	let hour = date.getHours();
+	let end;
 	if (hour > 12){
 		end = "pm";
 		hour -= 12;
 	} else {
 		end = "am";
 	}
-	var minute;
+	let minute;
 	if (date.getMinutes()<10){
 		minute = "0"+String(date.getMinutes());
 	} else {
@@ -116,7 +120,7 @@ function hoverOn(card) {
 	var selected_card = document.getElementById(card);
 	selected_card.classList.remove('animate-box','fadeInUp','animated-fast');
 	selected_card.classList.add('animated','jello');
-	console.log("jello has been added");
+	// console.log("jello has been added");
 }
 
 function hoverOff(card) {
@@ -127,35 +131,146 @@ function hoverOff(card) {
 	}
 }
 
-function openUp(card, num) {
-	// reset
-	menuRender(false);
-	var content = document.getElementById("full"+num);
-	fullcard = content;
-	console.log(fullcard);
-	contentClear(popup);
+function openUp(num) {
+	// menuRender(false);
+	var fullcard = document.getElementById("full"+num);
+	console.log("OPENED", fullcard);
+	contentClear();
 
 	// card.style.animation = "full-scale 1s";
-	content.classList.remove('content-hidden');
-	content.classList.add('content-full');
+	if (fullcard.classList.contains('content-hidden')) {
+		fullcard.classList.remove('content-hidden');
+	}
+	fullcard.classList.add('content-full');
 	popup.style.display = "flex";
 
 	indc1.style.display = "none";
 	indc2.style.display = "none";
 
-	// reset pinching
-	// ignore = false;
-	// pinched = false;
-	// opened = true;
-	// console.log("disabled");
-	// setTimeout(function() {
-	// 	console.log("now");
-	// 	ignore = false;
-	// 	// console.log("now");
-	// }, 5000);
+	// // specific actions for each card
+	switch (num) {
+		case 1:
+			var pswpElement = document.querySelectorAll('.pswp')[0];
+
+			// build items array
+			var items = [
+				{
+					src: 'https://placekitten.com/600/400',
+					w: 600,
+					h: 400
+				},
+				{
+					src: 'https://placekitten.com/1200/900',
+					w: 1200,
+					h: 900
+				}
+			];
+
+			// define options (if needed)
+			var options = {
+				// optionName: 'option value'
+				// for example:
+				index: 0 // start at first slide
+			};
+
+			// Initializes and opens PhotoSwipe
+			var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+			gallery.init();
+			break;
+
+		case 2:
+			console.log(num);
+			break;
+
+		case 3:
+			console.log(num);
+			break;
+
+		case 4:
+			console.log(num);
+			break;
+
+		case 5:
+			console.log(num);
+			var PALM_MAP_TYPE_THRESHOLD = 150;
+			var PALM_MAP_MOVE_THRESHOLD = 100;
+			var data = {};
+			var map;
+			function initialize() {
+				var mapOptions = {
+					zoom: 8,
+					center: new google.maps.LatLng(-34.397, 150.644)
+				};
+				map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+			}
+
+			google.maps.event.addDomListener(window, 'load', initialize);
+			// google.maps.event.addDomListener(window, 'load', initialize);
+
+			let controller = new Leap.Controller({enableGestures:true});
+			controller.on('frame', function(frame){
+				data = frame;
+				if(data && data.hands.length > 0){
+					if(data.hands[0].palmPosition[1] < PALM_MAP_MOVE_THRESHOLD){
+						map.panBy(data.hands[0].palmPosition[0]/10,data.hands[0].palmPosition[2]/10);
+					}else if(data.hands[0].palmPosition[1] > PALM_MAP_TYPE_THRESHOLD){
+						checkFingers(data);
+					}
+				}
+			});
+
+			function checkFingers(frame){
+				switch(frame.pointables.length){
+					case 1:
+						map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+						break;
+					case 2:
+						map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+						break;
+					default:
+						break;
+				}
+			}	
+
+			controller.connect();
+
+			break;
+
+
+		case 6:
+			console.log(num);
+			break;
+
+		case 7:
+			console.log(num);
+			break
+
+		case 8:
+			console.log(num);
+			break;
+
+		case 9:
+			console.log(num);
+			break;
+
+		case 10:
+			console.log(num);
+			break;
+
+		case 11:
+			console.log(num);
+			break;
+
+		case 12:
+			console.log(num);
+			break;
+
+		default:
+			console.log("DEFAULT");
+	}
 }
 
-function contentClear(popup){
+function contentClear(){
 	var cards = popup.getElementsByTagName('div');
 	for (var i = 0; i < cards.length; i++) {
 		var card = cards[i];
@@ -169,51 +284,48 @@ function contentClear(popup){
 	}
 }
 
-function menuRender(show) {
-	var heading = document.getElementsByTagName("header")[0];
-	if (show) {
-		while (heading.classList.contains('slide1-out')){
-			heading.classList.remove('slide1-out')
-		}
-		// while (fullcard.classList.contains('slide1-out')){
-		// 	fullcard.classList.remove('slide1-out')
-		// }
-		heading.classList.add('slide1-in');
-		// fullcard.classList.add('slide1-in');
-		heading.style.display = 'flex';
-		menu.style.display = "none";
-		// ignore = true;
-		// console.log('open');
-	} else {
-		while (heading.classList.contains('slide1-in')){
-			heading.classList.remove('slide1-in')
-		}
-		// while (fullcard.classList.contains('slide1-in')){
-		// 	fullcard.classList.remove('slide1-in')
-		// }
-		heading.classList.add('slide1-out');
-		// fullcard.classList.add('slide1-out');
-		heading.style.display = '';
-		menu.style.display = "";
-		// clearTimeout(ignoreDelay);
-		// ignore = true;
-		// pinched = false;
-		// opened = true;
-		// ignoreDelay = setTimeout(function() {
-		// 	ignore = false;
-		// }, 1000);
-	}
-}
+// function menuRender(show) {
+// 	var heading = document.getElementsByTagName("header")[0];
+// 	if (show) {
+// 		while (heading.classList.contains('slide1-out')){
+// 			heading.classList.remove('slide1-out')
+// 		}
+// 		// while (fullcard.classList.contains('slide1-out')){
+// 		// 	fullcard.classList.remove('slide1-out')
+// 		// }
+// 		heading.classList.add('slide1-in');
+// 		// fullcard.classList.add('slide1-in');
+// 		heading.style.display = 'flex';
+// 		menu.style.display = "none";
+// 		// ignore = true;
+// 		// console.log('open');
+// 	} else {
+// 		while (heading.classList.contains('slide1-in')){
+// 			heading.classList.remove('slide1-in')
+// 		}
+// 		// while (fullcard.classList.contains('slide1-in')){
+// 		// 	fullcard.classList.remove('slide1-in')
+// 		// }
+// 		heading.classList.add('slide1-out');
+// 		// fullcard.classList.add('slide1-out');
+// 		heading.style.display = '';
+// 		menu.style.display = "";
+// 		// clearTimeout(ignoreDelay);
+// 		// ignore = true;
+// 		// pinched = false;
+// 		// opened = true;
+// 		// ignoreDelay = setTimeout(function() {
+// 		// 	ignore = false;
+// 		// }, 1000);
+// 	}
+// }
 
 function backToMain() {
 	popup.style.display = '';
 	indc1.style.display = "";
 	indc2.style.display = "";
 	mainPage = true;
-	// ignore = true;
-	// pinched = false;
-	// opened = true;
-	// clearTimeout(ignoreDelay);
+	openedCard = 0;
 }
 
 // Additional Javascript for Animation
@@ -226,7 +338,6 @@ function backToMain() {
 			if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
 
 				i++;
-
 				$(this.element).addClass('item-animate');
 				setTimeout(function(){
 
