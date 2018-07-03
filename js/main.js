@@ -2,6 +2,7 @@
 var week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var current = 1;
 var mainPage = true;
+
 var slide1;
 var slide2;
 var indc1;
@@ -11,6 +12,11 @@ var fullcard;
 // var menu;
 var photos;
 
+// jQuery(document).ready(function(){	
+// 	jQuery("#gallery").unitegallery({});
+// });
+
+// Initialize UI Elements (sliders, etc)
 window.onload = function() {
 	setInfobox();
 
@@ -33,6 +39,7 @@ window.onload = function() {
 	// }); 
 }
 
+// Initialize the Date, Time, Info Box (top right corner of UI)
 function setInfobox(){
 	let day = document.getElementById("day");
 	let time = document.getElementById("time");
@@ -57,7 +64,7 @@ function setInfobox(){
 	weather.src = "image/sunny.png";
 }
 
-function swipeRight(){
+function swipeRight(){	
 	console.log("swipe left to right");
 	if (slide1.classList.contains("slide1-out")){
 		slide1.classList.remove("slide1-out");
@@ -77,7 +84,7 @@ function swipeRight(){
 }
 
 function swipeLeft(){
-	console.log("swipe right to left")
+	console.log("swipe right to left");
 	if (slide1.classList.contains("slide1-in")){
 		slide1.classList.remove("slide1-in");
 	}
@@ -95,27 +102,28 @@ function swipeLeft(){
 	}
 }
 
-function click(right,bottom) {
-	var currentSlide = document.getElementById("slide"+String(current));
-	var cards = currentSlide.getElementsByClassName('cards');
-	var index;
-	if (right) {
-		if (bottom) {
-			index = 3;
-		} else {
-			index = 1;
-		}
-	} else {
-		if (bottom) {
-			index = 2;
-		} else {
-			index = 0;
-		}
-	}
-	card = cards[index];
-	openUp(card, card.id.charAt(4));
-}
+// function click(right,bottom) {
+// 	var currentSlide = document.getElementById("slide"+String(current));
+// 	var cards = currentSlide.getElementsByClassName('cards');
+// 	var index;
+// 	if (right) {
+// 		if (bottom) {
+// 			index = 3;
+// 		} else {
+// 			index = 1;
+// 		}
+// 	} else {
+// 		if (bottom) {
+// 			index = 2;
+// 		} else {
+// 			index = 0;
+// 		}
+// 	}
+// 	card = cards[index];
+// 	openUp(card, card.id.charAt(4));
+// }
 
+//Add the animation when index finger hovers on the icon
 function hoverOn(card) {
 	var selected_card = document.getElementById(card);
 	selected_card.classList.remove('animate-box','fadeInUp','animated-fast');
@@ -123,6 +131,7 @@ function hoverOn(card) {
 	// console.log("jello has been added");
 }
 
+//deactivate the hover on animation
 function hoverOff(card) {
 	var unselected_card = document.getElementById(card);
 	if (unselected_card.classList.contains('jello')) {
@@ -142,132 +151,17 @@ function openUp(num) {
 		fullcard.classList.remove('content-hidden');
 	}
 	fullcard.classList.add('content-full');
+
+	// card.style.animation = "full-scale 1s";
+	fullcard.classList.add('card-expand');
+	setTimeout(function(){},5000);
+	fullcard.classList.remove('content-hidden');
+	fullcard.classList.add('content-full','animated','zoomIn');
+	console.log("content full has been added");
 	popup.style.display = "flex";
 
 	indc1.style.display = "none";
 	indc2.style.display = "none";
-
-	// // specific actions for each card
-	switch (num) {
-		case 1:
-			var pswpElement = document.querySelectorAll('.pswp')[0];
-
-			// build items array
-			var items = [
-				{
-					src: 'https://placekitten.com/600/400',
-					w: 600,
-					h: 400
-				},
-				{
-					src: 'https://placekitten.com/1200/900',
-					w: 1200,
-					h: 900
-				}
-			];
-
-			// define options (if needed)
-			var options = {
-				// optionName: 'option value'
-				// for example:
-				index: 0 // start at first slide
-			};
-
-			// Initializes and opens PhotoSwipe
-			var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-			gallery.init();
-			break;
-
-		case 2:
-			console.log(num);
-			break;
-
-		case 3:
-			console.log(num);
-			break;
-
-		case 4:
-			console.log(num);
-			break;
-
-		case 5:
-			console.log(num);
-			var PALM_MAP_TYPE_THRESHOLD = 150;
-			var PALM_MAP_MOVE_THRESHOLD = 100;
-			var data = {};
-			var map;
-			function initialize() {
-				var mapOptions = {
-					zoom: 8,
-					center: new google.maps.LatLng(-34.397, 150.644)
-				};
-				map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-			}
-
-			google.maps.event.addDomListener(window, 'load', initialize);
-			// google.maps.event.addDomListener(window, 'load', initialize);
-
-			let controller = new Leap.Controller({enableGestures:true});
-			controller.on('frame', function(frame){
-				data = frame;
-				if(data && data.hands.length > 0){
-					if(data.hands[0].palmPosition[1] < PALM_MAP_MOVE_THRESHOLD){
-						map.panBy(data.hands[0].palmPosition[0]/10,data.hands[0].palmPosition[2]/10);
-					}else if(data.hands[0].palmPosition[1] > PALM_MAP_TYPE_THRESHOLD){
-						checkFingers(data);
-					}
-				}
-			});
-
-			function checkFingers(frame){
-				switch(frame.pointables.length){
-					case 1:
-						map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-						break;
-					case 2:
-						map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
-						break;
-					default:
-						break;
-				}
-			}	
-
-			controller.connect();
-
-			break;
-
-
-		case 6:
-			console.log(num);
-			break;
-
-		case 7:
-			console.log(num);
-			break
-
-		case 8:
-			console.log(num);
-			break;
-
-		case 9:
-			console.log(num);
-			break;
-
-		case 10:
-			console.log(num);
-			break;
-
-		case 11:
-			console.log(num);
-			break;
-
-		case 12:
-			console.log(num);
-			break;
-
-		default:
-			console.log("DEFAULT");
-	}
 }
 
 function contentClear(){

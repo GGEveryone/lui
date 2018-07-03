@@ -10,7 +10,6 @@ canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 var ctx = canvas.getContext("2d");
 ctx.globalAlpha = 0.2;
-// var tempPositions = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
 var last;
 var fingers = ["#9bcfed", "#B2EBF2", "#80DEEA", "#4DD0E1", "#26C6DA"];
 var clickable = false;
@@ -22,11 +21,13 @@ var index_position = 0;
 var velocityPalm = 0;
 var pinch = 0;
 var select;
+var iconSelected = false;
 var touches = {0: [], 1: [], 2: [], 3: [], 4: [] };
 
 // window initial defualt
 var currentSlide = 1;
 var openedCard = 0;
+
 //get dimension information of all the cards
 var card_dimensions = [];
 for (var i = 1; i <= 12; i++) {
@@ -34,15 +35,6 @@ for (var i = 1; i <= 12; i++) {
 	// console.log("Dimension of card "+i);
 	// console.log(card_dimensions[i]);
 }
-
-// var mainPage = true;
-
-
-// map
-var PALM_MAP_TYPE_THRESHOLD = 150;
-var PALM_MAP_MOVE_THRESHOLD = 100;
-var data = {};
-var map;
 
 // check intervals 
 setInterval(function() {
@@ -53,8 +45,6 @@ setInterval(function() {
 	}
 }, 100);
 
-// google.maps.event.addDomListener(window, 'load', mapInit());
-
 Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -64,7 +54,7 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 
 		// TODO: update pinch function
 		if (!mainPage) {
-			if (pinch > 0.8 && hand.pinchStrength < 0.3) {
+			if (pinch > 0.7 && hand.pinchStrength < 0.3) {
 				// console.log(pinch, hand.pinchStrength)
 				backToMain();
 			} else {
@@ -111,95 +101,8 @@ Leap.loop({frameEventName: "animationFrame"}, function(frame) {
 		});
 		// var xAvg = xTot / frame.fingers.length;
 		// var yAvg = yTot / frame.fingers.length;
-		select = [xAvg > canvas.width/2, yAvg > canvas.height/2];
+		//select = [xAvg > canvas.width/2, yAvg > canvas.height/2];
 	}
-
-	// specific actions for each card
-	switch (openedCard) {
-		case 1:
-			console.log(openedCard);
-			break;
-
-		case 2:
-			console.log(openedCard);
-			break;
-
-		case 3:
-			console.log(openedCard);
-			break;
-
-		case 4:
-			console.log(openedCard);
-			break;
-
-		case 5:
-			// console.log("JERE");
-			// google.maps.event.addDomListener(window, 'load', mapInit());
-			console.log(map);
-
-			// if (map.classList.contains('content-hidden')) {
-			// 	map.classList.remove('content-hidden');
-			// 	map.classList.add('content-full');
-			// }
-	 	// 	// google.maps.event.addDomListener(window, 'load', mapInit());
-
-			// data = frame;
-			// if(data && data.hands.length > 0){
-			// 	if(data.hands[0].palmPosition[1] < PALM_MAP_MOVE_THRESHOLD){
-			// 		map.panBy(data.hands[0].palmPosition[0]/10,data.hands[0].palmPosition[2]/10);
-			// 	}else if(data.hands[0].palmPosition[1] > PALM_MAP_TYPE_THRESHOLD){
-			// 		checkFingers(data);
-			// 	}
-			// }
-
-			function checkFingers(frame){
-				switch(frame.pointables.length){
-					case 1:
-						map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-						break;
-					case 2:
-						map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
-						break;
-					default:
-						break;
-				}
-			}	
-
-			break;
-
-
-		case 6:
-			console.log(openedCard);
-			break;
-
-		case 7:
-			console.log(openedCard);
-			break
-
-		case 8:
-			console.log(openedCard);
-			break;
-
-		case 9:
-			console.log(openedCard);
-			break;
-
-		case 10:
-			console.log(openedCard);
-			break;
-
-		case 11:
-			console.log(openedCard);
-			break;
-
-		case 12:
-			console.log(openedCard);
-			break;
-
-		default:
-			// console.log("DEFAULT");
-	}
-
 });
 
 function drawCircle(center, radius, color, fill) {
@@ -252,14 +155,14 @@ function currentLocation() {
 
 			} 
 		}
-	}
+	} 
+
+	return ;
 }
 
 function checkMovementMain() {
 	// swipe left or right
-	// console.log(velocityPalm[0]);
-	// console.log(index_position)
-	if (Math.abs(velocityPalm[0])>500) { 
+	if (Math.abs(velocityPalm[0])>500) { // to make it less sensitive
 		if(velocityPalm[0] < -400){
 			swipeLeft();
 			currentSlide = 2;
@@ -270,85 +173,137 @@ function checkMovementMain() {
 	} 
 
 	// click event
-	else if(velocity[2] < -300 && select){
+	else if(velocity[2] < -300){
 		// click(select[0], select[1]); // in main.js file
-		openedCard= currentLocation();
-		openUp(openedCard);
+		let cardClicked= currentLocation();
+		if (cardClicked) {
+			console.log(openedCard);
 
-		// if (currentSlide == 1) {
-		// 	for (let i = 1; i <= 6; i++) {
-		// 		let card_rect = card_dimensions[i];
-		// 		if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
-		// 			index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
-		// 			openUp(i);
-		// 		}
-		// 	}
-		// } else {
-		// 	for (let i = 7; i <= 12; i++) {
-		// 		let card_rect = card_dimensions[i];
-		// 		if (index_position[0] > card_rect.left - canvas.width && index_position[0] < card_rect.right -canvas.width &&
-		// 			index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
-		// 			openUp(i);
+			openedCard = cardClicked;
+			openUp(openedCard);
+			mainPage = false;
 
-		// 		} 
-		// 	}
-		// }
-		mainPage = false;
+		}
 	}
 
 	// hovering
 	else {
 		if (currentSlide == 1) {
-			for (let i = 1; i <= 6; i++) {
-				let card_rect = card_dimensions[i];
-				//if the finger falls in the
+			for (var i = 1; i <= 6; i++) {
+				var card_rect = card_dimensions[i];
+				//if the finger falls in the card div dimension for card 1-6
 				if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
 					index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
-					// console.log("The finger is on card " + i);
-					// console.log(index_position)
 					hoverOn("card"+i);
 				} else {
 					hoverOff("card"+i);
-					// console.log("The finger moves off card " + i);
 				}
 			}
 		} else if (currentSlide == 2) {
-			for (let i = 7; i <= 12; i++) {
-				let card_rect = card_dimensions[i];
-				//if the finger falls in the
+			for (var i = 7; i <= 12; i++) {
+				var card_rect = card_dimensions[i];
+				//if the finger falls in the card div dimension for card 7-12
 				if (index_position[0] > card_rect.left - canvas.width && index_position[0] < card_rect.right -canvas.width &&
 					index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
 					// console.log("The finger is on card " + i);
 					// console.log(index_position)
 					hoverOn("card"+i);
+					iconSelected = true;
 				} else {
 					hoverOff("card"+i);
+					iconSelected = false;
 					// console.log("The finger moves off card " + i);
 				}
-			}
-		}	
+			}	
+		}
 	}
-
+	
 }
 
 function checkMovementFull () {
-	// swipe left or right
-	if (fullcard) {
-		if(velocityPalm[0] < -400){
-			menuRender(false);
-		} else if (velocityPalm[0] > 400) {
-			menuRender(true);
-		}
+	// // specific actions for each card
+	switch (openedCard) {
+		case 1:
+			let photoSelected = photoHovered();
+			if (photoSelected) {
+				// console.log(photoSelected);
+				let img = photoSelected.getElementsByClassName('rig-img')[0];
+				img.classList.add('image-hover');
+				setTimeout(function(){ img.classList.remove('image-hover')}, 1000);
+			}
+			break;
+
+		case 2:
+			break;
+
+		case 3:
+			break;
+
+		case 4:
+			break;
+
+		case 5:
+			break;
+
+		case 6:
+			break;
+
+		case 7:
+			break
+
+		case 8:
+			break;
+
+		case 9:
+			break;
+
+		case 10:
+			break;
+
+		case 11:
+			break;
+
+		case 12:
+			break;
+
+		default:
+			console.log("DEFAULT");
 	}
+	// console.log("here");
+	// swipe left or right
+	// if (fullcard) {
+	// 	if(velocityPalm[0] < -400){
+	// 		menuRender(false);
+	// 	} else if (velocityPalm[0] > 400) {
+	// 		menuRender(true);
+	// 	}
+	// }
 }
 
-function mapInit() {
-	var mapOptions = {
-		zoom: 8,
-		center: new google.maps.LatLng(-34.397, 150.644)
-	};
-	map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+function photoHovered() {
+	var photos = [];
+	for (let i = 1; i <= 12; i++) {
+		// console.log(document.getElementById("rig-cell1"));
+		photos[i] = document.getElementsByClassName("rig-cell")[i-1].getBoundingClientRect();
+	}
+
+	for (let i = 1; i <= 12; i++) {
+		let card_rect = photos[i];
+		if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
+			index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
+			return document.getElementById('rig-cell'+i);
+		}
+	}
+	return ;
 }
+
+// function mapInit() {
+// 	var mapOptions = {
+// 		zoom: 8,
+// 		center: new google.maps.LatLng(-34.397, 150.644)
+// 	};
+// 	map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+// }
 
 // function findPinchingFinger(hand){
 // 	var pincher;
