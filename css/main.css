@@ -2,7 +2,6 @@ html {
 	height: 100vh;
 	width: 100vw;
 	background-image: url(../image/deepSpace.jpg);
-	overflow: hidden;
 }
 
 body {
@@ -17,6 +16,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    overflow-x: hidden;
 }
 
 #canvas {
@@ -357,7 +357,7 @@ header {
 	width: 42%;
     /*max-width:900px;*/
     margin:0 auto; /*center aligned*/
-    padding:0;
+    padding-top: 250px;
     font-size:0; /* Remember to change it back to normal font size if have captions */
     list-style:none;
 }

@@ -231,6 +231,8 @@ function checkMovementFull () {
 				img.classList.add('image-hover');
 				setTimeout(function(){ img.classList.remove('image-hover')}, 1000);
 			}
+
+
 			break;
 
 		case 2:
@@ -296,6 +298,8 @@ function photoHovered() {
 	}
 	return ;
 }
+
+
 
 // function mapInit() {
 // 	var mapOptions = {
