@@ -27,6 +27,8 @@ var touches = {0: [], 1: [], 2: [], 3: [], 4: [] };
 // window initial defualt
 var currentSlide = 1;
 var openedCard = 0;
+let currentPhoto = 1;
+
 
 //get dimension information of all the cards
 var card_dimensions = [];
@@ -180,8 +182,12 @@ function checkMovementMain() {
 			console.log(openedCard);
 
 			openedCard = cardClicked;
-			openUp(openedCard);
-			mainPage = false;
+			if (openedCard == 1 ) {
+				openUp(openedCard);
+				mainPage = false;
+			}
+			// openUp(openedCard);
+			// mainPage = false;
 
 		}
 	}
@@ -225,12 +231,23 @@ function checkMovementFull () {
 	switch (openedCard) {
 		case 1:
 			let photoSelected = photoHovered();
+			let photoSlide = 1;
 			if (photoSelected) {
 				// console.log(photoSelected);
 				let img = photoSelected.getElementsByClassName('rig-img')[0];
 				img.classList.add('image-hover');
 				setTimeout(function(){ img.classList.remove('image-hover')}, 1000);
 			}
+
+			if (Math.abs(velocityPalm[0])>500) { // to make it less sensitive
+				if(velocityPalm[0] < -400){
+					swipePhotoLeft();
+					currentPhoto = 2;
+				} else if (velocityPalm[0] > 400) {
+					swipePhotoRight();
+					currentPhoto = 1;
+				}
+			} 
 
 
 			break;
@@ -289,14 +306,25 @@ function photoHovered() {
 		photos[i] = document.getElementsByClassName("rig-cell")[i-1].getBoundingClientRect();
 	}
 
-	for (let i = 1; i <= 12; i++) {
-		let card_rect = photos[i];
-		if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
-			index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
-			return document.getElementById('rig-cell'+i);
+	if (currentSlide == 1) {
+		for (var i = 1; i <= 6; i++) {
+			var card_rect = photos[i];
+			//if the finger falls in the card div dimension for card 1-6
+			if (index_position[0] > card_rect.left && index_position[0] < card_rect.right &&
+				index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
+				return document.getElementById('rig-cell'+i);
+			}
 		}
+	} else if (currentSlide == 2) {
+		for (var i = 7; i <= 12; i++) {
+			var card_rect = card_dimensions[i];
+			//if the finger falls in the card div dimension for card 7-12
+			if (index_position[0] > card_rect.left - canvas.width && index_position[0] < card_rect.right -canvas.width &&
+				index_position[1] > card_rect.top && index_position[1] < card_rect.bottom) {
+				return document.getElementById('rig-cell'+i);
+			}
+		}	
 	}
-	return ;
 }
 
 

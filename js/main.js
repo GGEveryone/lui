@@ -32,6 +32,12 @@ window.onload = function() {
 	popup = document.getElementById("popup");
 	// menu = document.getElementById("menu");
 
+	photo1 = document.getElementById("photo1");
+	photo2 = document.getElementById("photo2");
+
+	indcPhoto1 = document.getElementById("indicatorPhoto1");
+	indcPhoto2 = document.getElementById("indicatorPhoto2");
+
 	// jQuery("#gallery").unitegallery({});
 	// photos = document.getElementById("gallery").unitegalleryMain();
 	// $(document).ready(function(){ 
@@ -102,6 +108,44 @@ function swipeLeft(){
 	}
 }
 
+function swipePhotoRight(){	
+	console.log("swipe left to right");
+	if (photo1.classList.contains("photo1-out")){
+		photo1.classList.remove("photo1-out");
+	}
+
+	if (photo2.classList.contains("photo2-in")){
+		photo2.classList.remove("photo2-in");
+	}
+
+	if (currentPhoto != 1) {
+		photo2.classList.add("photo2-out");
+		photo1.classList.add("photo1-in");
+		currentPhoto = 1;
+		indcPhoto1.className = "active";
+		indcPhoto2.className = "";
+	}
+}
+
+function swipePhotoLeft(){
+	console.log("swipe right to left");
+	if (photo1.classList.contains("photo1-in")){
+		photo1.classList.remove("photo1-in");
+	}
+
+	if (photo2.classList.contains("photo2-out")){
+		photo2.classList.remove("photo2-out");
+	}
+
+	if (currentPhoto != 2) {
+		photo1.classList.add("photo1-out");
+		photo2.classList.add("photo2-in");
+		currentPhoto = 2;
+		indcPhoto2.className = "active";
+		indcPhoto1.className = "";
+	}
+}
+
 // function click(right,bottom) {
 // 	var currentSlide = document.getElementById("slide"+String(current));
 // 	var cards = currentSlide.getElementsByClassName('cards');
@@ -146,16 +190,22 @@ function openUp(num) {
 	console.log("OPENED", fullcard);
 	contentClear();
 
-	// card.style.animation = "full-scale 1s";
-	if (fullcard.classList.contains('content-hidden')) {
-		fullcard.classList.remove('content-hidden');
-	}
-	fullcard.classList.add('content-full');
+	// fullcard.style.animation = "full-scale 1s";
+	// if (fullcard.classList.contains('content-hidden')) {
+	// 	fullcard.classList.remove('content-hidden');
+	// }
+	// fullcard.classList.add('content-full', 'animated','zoomIn');
 
 	// card.style.animation = "full-scale 1s";
 	fullcard.classList.add('card-expand');
-	setTimeout(function(){},5000);
-	fullcard.classList.remove('content-hidden');
+	setTimeout(function(){
+		// fullcard.classList.remove('animated');
+		// fullcard.classList.remove('zommIn');
+		// fullcard.classList.remove('card-expand');
+		// fullcard.classList.add('card-collapse');
+
+	},2000);
+	// fullcard.classList.remove('content-hidden');
 	fullcard.classList.add('content-full','animated','zoomIn');
 	console.log("content full has been added");
 	popup.style.display = "flex";
@@ -172,9 +222,9 @@ function contentClear(){
 			card.classList.remove('content-full');
 		}
 
-		if (! card.classList.contains('content-hidden')){
-			card.classList.add('content-hidden');
-		}
+		// if (! card.classList.contains('content-hidden')){
+		// 	card.classList.add('content-hidden');
+		// }
 	}
 }
 
@@ -215,6 +265,21 @@ function contentClear(){
 // }
 
 function backToMain() {
+	let card = document.getElementById("full1");
+	card.classList.remove('card-expand', 'content-full', 'zoomIn');
+	// card.classList.add('card-collapse');
+	// setTimeout(function(){
+	// 	// fullcard.classList.remove('animated');
+	// 	// fullcard.classList.remove('zommIn');
+	// 	// fullcard.classList.remove('card-expand');
+	// 	// fullcard.classList.add('card-collapse');
+	// 	popup.style.display = '';
+	// 	indc1.style.display = "";
+	// 	indc2.style.display = "";
+	// 	mainPage = true;
+	// 	openedCard = 0;
+
+	// },500);
 	popup.style.display = '';
 	indc1.style.display = "";
 	indc2.style.display = "";

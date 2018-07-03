@@ -109,11 +109,6 @@ main {
     /*z-index: 5;*/
 }
 
-.card-expand {
-	-webkit-transform: scale(2);
-	-webkit-transition-duration: 2s;
-}
-
 #card1 {
 	background-image: url(../image/1.png);
 }
@@ -162,7 +157,6 @@ main {
 	background-image: url(../image/12.png);
 }
 
-
 .full-screen {
 	display: none;
 	flex-direction: row;
@@ -182,7 +176,7 @@ main {
     background-position: center;
 }
 
-#menu {
+/*#menu {
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -198,7 +192,7 @@ header {
 	display: none;
 	background-color: #37474F;
 	opacity: 0.2;
-}
+}*/
 
 #popup {
 	display: none;
@@ -214,152 +208,101 @@ header {
 	align-items: center;
 }
 
-/*.zoomIn {
-	-webkit-animation-duration: 0.5s;
+.card-expand {
+	-webkit-transform: scale(1);
+	-webkit-transition-duration: 2s;
 }
 
-.content-hidden {
-	display: none;
-	transition-duration: 0.8s;
+.card-collapse {
+	-webkit-transform: scale(0.5);
+	-webkit-transition-duration: 2s;
 }
 
-.expand {
-	width: 90%;
-	height: 90%;
-	border-radius: 5px;
-	align-self: center;
-}
-
-#map-canvas {
-    height: 100%;
-    margin: 0px;
-    padding: 0px
-}*/
-
-/*@import url(https://fonts.googleapis.com/css?family=Quicksand:400,300);*/
-/*body{
-    font-family: 'Quicksand', sans-serif;
-}
-.gal-container{
-	padding: 12px;
-}
-.gal-item{
-	overflow: hidden;
-	padding: 3px;
-}
-.gal-item .box{
-	height: 350px;
-	overflow: hidden;
-}
-.box img{
+/* -------------------- Animation  -------------------- */
+#slide1 {
+	position: absolute;
 	height: 100%;
 	width: 100%;
-	object-fit:cover;
-	-o-object-fit:cover;
-}
-.gal-item a:focus{
-	outline: none;
-}
-.gal-item a:after{
-	content:"\e003";
-	font-family: 'Glyphicons Halflings';
-	opacity: 0;
-	background-color: rgba(0, 0, 0, 0.75);
-	position: absolute;
-	right: 3px;
-	left: 3px;
-	top: 3px;
-	bottom: 3px;
-	text-align: center;
-    line-height: 350px;
-    font-size: 30px;
-    color: #fff;
-    -webkit-transition: all 0.5s ease-in-out 0s;
-    -moz-transition: all 0.5s ease-in-out 0s;
-    transition: all 0.5s ease-in-out 0s;
-}
-.gal-item a:hover:after{
-	opacity: 1;
-}
-.modal-open .gal-container .modal{
-	background-color: rgba(0,0,0,0.4);
-}
-.modal-open .gal-item .modal-body{
-	padding: 0px;
-}
-.modal-open .gal-item button.close{
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    background-color: #000;
-    opacity: 1;
-    color: #fff;
-    z-index: 999;
-    right: -12px;
-    top: -12px;
-    border-radius: 50%;
-    font-size: 15px;
-    border: 2px solid #fff;
-    line-height: 25px;
-    -webkit-box-shadow: 0 0 1px 1px rgba(0,0,0,0.35);
-	box-shadow: 0 0 1px 1px rgba(0,0,0,0.35);
-}
-.modal-open .gal-item button.close:focus{
-	outline: none;
-}
-.modal-open .gal-item button.close span{
-	position: relative;
-	top: -3px;
-	font-weight: lighter;
-	text-shadow:none;
-}
-.gal-container .modal-dialogue{
-	width: 80%;
-}
-.gal-container .description{
-	position: relative;
-	height: 40px;
-	top: -40px;
-	padding: 10px 25px;
-	background-color: rgba(0,0,0,0.5);
-	color: #fff;
-	text-align: left;
-}
-.gal-container .description h4{
-	margin:0px;
-	font-size: 15px;
-	font-weight: 300;
-	line-height: 20px;
 }
 
-.gal-container .modal.fade.in .modal-dialog {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-    -webkit-transform: translate3d(0, -100px, 0);
-    transform: translate3d(0, -100px, 0);
-    opacity: 1;
+.slide1-in {
+    animation: slide1-in 1s forwards;
+    -webkit-animation: slide1-in 1s forwards;
 }
-@media (min-width: 768px) {
-.gal-container .modal-dialog {
-    width: 55%;
-    margin: 50 auto;
+
+@keyframes slide1-in {
+	0% {transform: translateX(-100%);}
+    100% { transform: translateX(0%); }
 }
+
+.slide1-out {
+    animation: slide1-out 1s forwards;
+    -webkit-animation: slide1-out 1s forwards;
 }
-@media (max-width: 768px) {
-    .gal-container .modal-content{
-        height:250px;
+
+@keyframes slide1-out {
+    100% { transform: translateX(-100%); }
+}
+
+#slide2 {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+}
+
+.slide2-in {
+    animation: slide2-in 1s forwards;
+    -webkit-animation: slide2-in 1s forwards;
+}
+
+@keyframes slide2-in {
+    100% { transform: translateX(0%); }
+}
+
+.slide2-out {
+    animation: slide2-out 1s forwards;
+    -webkit-animation: slide2-out 1s forwards;
+}
+
+@keyframes slide2-out {
+	0% {transform: translateX(0%);}
+    100% { transform: translateX(100%); }
+}
+
+@keyframes full-scale{
+    from{
+        transform:scale(0.5);
     }
-}*/
+    to{
+        transform:scale(1);
+    }
+}
+
+.js .animate-box {
+  opacity: 0;
+}
+
+.jello {
+	/* -webkit-animation-duration: 3s; */
+	-webkit-animation-iteration-count: infinite;
+}
+
+
 
 #rig {
-	width: 42%;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	/*width: 42%;*/
     /*max-width:900px;*/
-    margin:0 auto; /*center aligned*/
-    padding-top: 250px;
-    font-size:0; /* Remember to change it back to normal font size if have captions */
-    list-style:none;
+    /*margin:0 auto;*/
+     /*center aligned*/
+    /*padding-top: 250px;*/
+    /*font-size:0; */
+    /* Remember to change it back to normal font size if have captions */
+    /*list-style:none;*/
 }
 
 #rig li {
@@ -445,137 +388,58 @@ header {
     opacity:0.9;
 }
 
-
-/* .work {
-  margin-bottom: 20px;
-}
-.work .work-grid {
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  position: relative;
-  height: 300px;
-  margin-bottom: 20px;
-  -webkit-transition: 0.3s;
-  -o-transition: 0.3s;
-  transition: 0.3s;
-}
-.work .work-grid .inner {
-  display: table;
-  height: 100%;
-  width: 100%;
-  opacity: 0;
-  background: rgba(237, 235, 232, 0.9);
-  -webkit-transition: 0.3s;
-  -o-transition: 0.3s;
-  transition: 0.3s;
-}
-@media screen and (max-width: 768px) {
-  .work .work-grid .inner {
-    opacity: 1;
-    background: rgba(237, 235, 232, 0.7);
-  }
-}
-.work .work-grid .inner .desc {
-  display: table-cell;
-  vertical-align: middle;
-  padding: 40px;
-}
-.work .work-grid .inner .desc h3 {
-  font-size: 14px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  font-weight: bold;
-  line-height: 24px;
-}
-.work .work-grid .inner .desc h3 a {
-  color: #000;
-}
-.work .work-grid .inner .desc .cat {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-@media screen and (max-width: 768px) {
-  .work .work-grid .inner .desc .cat {
-    color: #333333;
-  }
-}
-.work:hover .inner, .work:focus .inner {
-  opacity: 1;
-}
-.work:hover .desc h3 a, .work:focus .desc h3 a {
-  color: #cabcab;
-} */
-
-.js .animate-box {
-  opacity: 0;
+#photo1 {
+	/*position: absolute;*/
+	/*height: 100%;*/
+	width: 80%;
+	margin: 0 auto;
+	list-style:none;
 }
 
-.jello {
-	/* -webkit-animation-duration: 3s; */
-	-webkit-animation-iteration-count: infinite;
+.photo1-in {
+    animation: photo1-in 1s forwards;
+    -webkit-animation: photo1-in 1s forwards;
 }
 
-/* -------------------- Animation  -------------------- */
-#slide1 {
-	position: absolute;
-	height: 100%;
-	width: 100%;
-}
-
-.slide1-in {
-    animation: slide1-in 1s forwards;
-    -webkit-animation: slide1-in 1s forwards;
-}
-
-@keyframes slide1-in {
+@keyframes photo1-in {
 	0% {transform: translateX(-100%);}
     100% { transform: translateX(0%); }
 }
 
-.slide1-out {
-    animation: slide1-out 1s forwards;
-    -webkit-animation: slide1-out 1s forwards;
+.photo1-out {
+    animation: photo1-out 1s forwards;
+    -webkit-animation: photo1-out 1s forwards;
 }
 
-@keyframes slide1-out {
+@keyframes photo1-out {
     100% { transform: translateX(-100%); }
 }
 
-#slide2 {
+#photo2 {
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	padding: 100px;
 	transform: translateX(100%);
     -webkit-transform: translateX(100%);
 }
 
-.slide2-in {
-    animation: slide2-in 1s forwards;
-    -webkit-animation: slide2-in 1s forwards;
+.photo2-in {
+    animation: photo2-in 1s forwards;
+    -webkit-animation: photo2-in 1s forwards;
 }
 
-@keyframes slide2-in {
+@keyframes photo2-in {
     100% { transform: translateX(0%); }
 }
 
-.slide2-out {
-    animation: slide2-out 1s forwards;
-    -webkit-animation: slide2-out 1s forwards;
+.photo2-out {
+    animation: photo2-out 1s forwards;
+    -webkit-animation: photo2-out 1s forwards;
 }
 
-@keyframes slide2-out {
+@keyframes photo2-out {
 	0% {transform: translateX(0%);}
     100% { transform: translateX(100%); }
 }
 
-@keyframes full-scale{
-    from{
-        transform:scale(0);
-    }
-    to{
-        transform:scale(2);
-    }
-}
